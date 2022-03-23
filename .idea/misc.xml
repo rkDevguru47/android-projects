@@ -3,7 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/android projects/app/src/main/res/drawable/bg_gradient.xml" value="0.136" />
+        <entry key="..\:/android projects/app/src/main/res/drawable/splash_background.xml" value="0.136" />
+        <entry key="..\:/android projects/app/src/main/res/drawable/splash_screenbackground.xml" value="0.136" />
         <entry key="..\:/android projects/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/android projects/app/src/main/res/layout/activity_splash_screen.xml" value="0.25416666666666665" />
+        <entry key="..\:/android projects/app/src/main/res/layout/lol1.xml" value="0.25416666666666665" />
+        <entry key="..\:/android projects/app/src/main/res/layout/madeby_rk.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

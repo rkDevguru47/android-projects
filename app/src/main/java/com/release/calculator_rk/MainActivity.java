@@ -6,11 +6,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import com.release.calculator_rk.R;
 
 
 public class MainActivity extends AppCompatActivity {
-
     // creating variables for our text view and button
     String pi = "3.14159265";
     TextView tvsec, tvMain;
@@ -20,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         // initializing all our variables.
         tvsec = findViewById(R.id.idTVSecondary);
         tvMain = findViewById(R.id.idTVprimary);
@@ -319,21 +318,32 @@ public class MainActivity extends AppCompatActivity {
     //eval function
     public static double eval(final String str) {
         return new Object() {
+            // on below line we ar creating variable
+            // for tracking the position and char pos.
             int pos = -1, ch;
-
+            // below method is for moving to next character.
             void nextChar() {
+                // on below line we are incrementing our position
+                // and moving it to next position.
                 ch = (++pos < str.length()) ? str.charAt(pos) : -1;
             }
 
+            // this method is use to check the extra space
+            // present int the expression and removing it.
             boolean eat(int charToEat) {
                 while (ch == ' ') nextChar();
+                // on below line we are checking the char pos
+                // if both is equal then we are returning it to true.
                 if (ch == charToEat) {
                     nextChar();
                     return true;
                 }
                 return false;
             }
-
+            // below method is to parse our
+            // expression and to get the ans
+            // in this we are calling a parse
+            // expression method to calculate the value.
             double parse() {
                 nextChar();
                 double x = parseExpression();
@@ -347,6 +357,8 @@ public class MainActivity extends AppCompatActivity {
             // factor = `+` factor | `-` factor | `(` expression `)`
             //        | number | functionName factor | factor `^` factor
 
+            // in this method we will only perform addition and
+            // subtraction operation on the expression.
             double parseExpression() {
                 double x = parseTerm();
                 for (; ; ) {
@@ -355,7 +367,8 @@ public class MainActivity extends AppCompatActivity {
                     else return x;
                 }
             }
-
+            // in below method we will perform
+            // only multiplication and division operation.
             double parseTerm() {
                 double x = parseFactor();
                 for (; ; ) {
@@ -364,13 +377,19 @@ public class MainActivity extends AppCompatActivity {
                     else return x;
                 }
             }
-
+            // below method is use to parse the factor
             double parseFactor() {
+                //on below line we are checking for addition
+                // and subtraction and performing unary operations.
                 if (eat('+')) return parseFactor(); // unary plus
                 if (eat('-')) return -parseFactor(); // unary minus
 
                 double x;
+                // on below line we are creating
+                // a variable for position.
                 int startPos = this.pos;
+                // on below line we are checking
+                // for opening and closing parenthesis.
                 if (eat('(')) { // parentheses
                     x = parseExpression();
                     eat(')');
@@ -387,15 +406,18 @@ public class MainActivity extends AppCompatActivity {
                     else if (func.equals("tan")) x = Math.tan(Math.toRadians(x));
                     else if (func.equals("log")) x = Math.log10(x);
                     else if (func.equals("ln")) x = Math.log(x);
+                        // f we get any error then
+                        // we simply return the exception.
                     else throw new RuntimeException("Unknown function: " + func);
                 } else {
+                    // if the condition not satisfy then we are returning the exception
                     throw new RuntimeException("Unexpected: " + (char) ch);
                 }
-
+                // on below line we are calculating the power of the expression.
                 if (eat('^')) x = Math.pow(x, parseFactor()); // exponentiation
 
                 return x;
-            }
+            } // at last calling a parse for our expression.
         }.parse();
     }
 }
